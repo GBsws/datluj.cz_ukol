@@ -8,6 +8,7 @@ interface IWordboxProps {
 
 const Wordbox: React.FC<IWordboxProps> = ({ word, onFinish }) => {
   const [lettersLeft, setLettersLeft] = useState<string>(word);
+  const [mistake, setMistake] = useState<boolean>(false)
 
   useEffect(() => {
     const handleKeyUp = (event: KeyboardEvent) => {
@@ -18,6 +19,9 @@ const Wordbox: React.FC<IWordboxProps> = ({ word, onFinish }) => {
           if (lettersLeft.length === 1) {
             onFinish();
           }
+          setMistake(false)
+        } else {
+          setMistake(true)
         }
       }
     };
@@ -27,7 +31,7 @@ const Wordbox: React.FC<IWordboxProps> = ({ word, onFinish }) => {
     };
   }, [lettersLeft, onFinish]);
 
-  return <div className="wordbox">{lettersLeft}</div>;
+  return <div className={`wordbox ${mistake ? 'wordbox-mistake': ''}`}>{lettersLeft}</div>;
 };
 
 export default Wordbox;
