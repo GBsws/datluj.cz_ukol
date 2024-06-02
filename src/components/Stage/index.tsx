@@ -20,6 +20,7 @@ const generateWord = (size: number) => {
 
 const Stage: React.FC = () => {
   const [words, setWords] = useState<string[]>(['jahoda', 'jablko', 'pomelo']);
+  const [mistakes, setMistakes] = useState<number>(0)
   const handleFinish = () => {
     const newWord = generateWord(6);
     if (newWord) {
@@ -27,9 +28,12 @@ const Stage: React.FC = () => {
     }
   };
 
+  const handleMistake = ()=>{
+    setMistakes((prevMistakes)=> prevMistakes + 1)
+  }
   return (
     <div className="stage">
-      <div className="stage__mistakes">Chyb: 0</div>
+      <div className="stage__mistakes">Chyb: {mistakes}</div>
       <div className="stage__words">
         {words.map((word, index) => (
           <Wordbox
@@ -37,6 +41,7 @@ const Stage: React.FC = () => {
             key={word}
             onFinish={handleFinish}
             active={index === 0}
+            onMistake={handleMistake}
           />
         ))}
       </div>
